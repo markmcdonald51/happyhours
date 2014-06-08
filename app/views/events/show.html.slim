@@ -1,0 +1,30 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @event.title
+p
+  strong Description:
+  = @event.description
+p
+  strong Addmission charge:
+  = @event.addmission_charge
+p
+  strong Started at:
+  = @event.started_at
+p
+  strong Expired at:
+  = @event.expired_at
+p
+  strong Schedule:
+  = @event.schedule
+p
+  strong Venue:
+  = @event.venue
+p
+  strong Aasm state:
+  = @event.aasm_state
+
+= link_to 'Edit', edit_event_path(@event)
+'|
+= link_to 'Back', events_path

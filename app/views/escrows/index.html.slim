@@ -1,0 +1,57 @@
+h1 Listing escrows
+
+table
+  thead
+    tr
+      th User
+      th Description
+      th Btc amount
+      th Buyer email
+      th Seller email
+      th Btc escrow fee
+      th Btc seller fee
+      th Btc buyer fee
+      th Tracking number
+      th Btc amount seller will receive
+      th Max shipping days
+      th Inspection days
+      th Payee invitation
+      th Payer invitation
+      th Btc address
+      th Payment invitation
+      th Payment confirmation
+      th Private wif key
+      th Aasm state
+      th
+      th
+      th
+
+  tbody
+    - @escrows.each do |escrow|
+      tr
+        td = escrow.user
+        td = escrow.description
+        td = escrow.btc_amount
+        td = escrow.buyer_email
+        td = escrow.seller_email
+        td = escrow.btc_escrow_fee
+        td = escrow.btc_seller_fee
+        td = escrow.btc_buyer_fee
+        td = escrow.tracking_number
+        td = escrow.btc_amount_seller_will_receive
+        td = escrow.max_shipping_days
+        td = escrow.inspection_days
+        td = escrow.payee_invitation
+        td = escrow.payer_invitation
+        td = escrow.btc_address
+        td = escrow.payment_invitation
+        td = escrow.payment_confirmation
+        td = escrow.private_WIF_key
+        td = escrow.aasm_state
+        td = link_to 'Show', escrow
+        td = link_to 'Edit', edit_escrow_path(escrow)
+        td = link_to 'Destroy', escrow, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Escrow', new_escrow_path

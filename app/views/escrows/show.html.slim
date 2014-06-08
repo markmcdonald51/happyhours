@@ -1,0 +1,63 @@
+p#notice = notice
+
+p
+  strong User:
+  = @escrow.user
+p
+  strong Description:
+  = @escrow.description
+p
+  strong Btc amount:
+  = @escrow.btc_amount
+p
+  strong Buyer email:
+  = @escrow.buyer_email
+p
+  strong Seller email:
+  = @escrow.seller_email
+p
+  strong Btc escrow fee:
+  = @escrow.btc_escrow_fee
+p
+  strong Btc seller fee:
+  = @escrow.btc_seller_fee
+p
+  strong Btc buyer fee:
+  = @escrow.btc_buyer_fee
+p
+  strong Tracking number:
+  = @escrow.tracking_number
+p
+  strong Btc amount seller will receive:
+  = @escrow.btc_amount_seller_will_receive
+p
+  strong Max shipping days:
+  = @escrow.max_shipping_days
+p
+  strong Inspection days:
+  = @escrow.inspection_days
+p
+  strong Payee invitation:
+  = @escrow.payee_invitation
+p
+  strong Payer invitation:
+  = @escrow.payer_invitation
+p
+  strong Btc address:
+  = @escrow.btc_address
+p
+  strong Payment invitation:
+  = @escrow.payment_invitation
+p
+  strong Payment confirmation:
+  = @escrow.payment_confirmation
+p
+  strong Private wif key:
+  = @escrow.private_WIF_key
+p
+  strong Aasm state:
+  = @escrow.aasm_state
+
+= link_to 'Edit', edit_escrow_path(@escrow)
+'|
+= link_to 'Back', escrows_path

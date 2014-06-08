@@ -1,0 +1,35 @@
+.container
+  = semantic_form_for @event do |f|
+    .col-md-5
+  
+      = f.input :title
+      = f.input :description
+
+    .col-md-1
+    
+    .col-md-5
+    
+      = f.input :addmission_charge
+      = f.select_recurring :schedule
+
+      / = f.input :started_at, label: 'Start Time', :as => :time_select
+    
+      p
+      .container
+        .col-md-2  
+          p Start Time
+          = f.time_select :started_at, {ampm: true}
+          p
+        .col-md-4 
+          p End Time
+          = f.time_select :expired_at, {ampm: true}
+          p
+        
+      / = f.input :started_at, label: 'End Time', :as => :time_select
+  
+      / = f.input :started_at, label: 'Start on date', as: :string, 
+      /  :input_html => {:class => 'date_picker', placeholder: "click to see calendar"}
+      
+      = f.actions do
+        = f.action :submit, :as => :button
+        = f.action :cancel, :as => :link

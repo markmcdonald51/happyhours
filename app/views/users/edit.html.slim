@@ -1,0 +1,22 @@
+.container
+  = semantic_form_for :user, url: update_profile_path, 
+    method: :patch, html: { role: "form", class: "form-horizontal" } do |f|
+    
+    = f.inputs :name => "Required User Info" do 
+      .col-md-5
+        = f.input :email
+        = f.input :first_name
+        = f.input :last_name
+        
+      .col-md-1
+        
+      .col-md-5       
+        = f.input :country_code, as: :country, include_blank:'--- Select Country ---' 
+
+        = f.input :postal_code, input_html:  {placeholder: 'postal code or city. Example: 20016 or Washington, DC' }
+        - # f.input :gender, as: :select, collection: ["man", "woman"], include_blank: '--- Select Gender ---'    
+
+        = f.actions do 
+          = f.action :submit, :label => 'Save', button_html: { class: 'btn btn-primary'}
+          = link_to "Cancel", root_url, :class => "btn btn-warning"
+                

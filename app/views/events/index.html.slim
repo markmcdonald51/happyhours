@@ -1,0 +1,36 @@
+.container
+  h1 Listing events
+
+  table
+    thead
+      tr
+        th Title
+        th Description
+        th Addmission charge
+        th Started at
+        th Expired at
+        th Schedule
+        th Venue
+        th Aasm state
+        th
+        th
+        th
+
+    tbody
+      - @events.each do |event|
+        tr
+          td = event.title
+          td = event.description
+          td = event.addmission_charge
+          td = event.started_at
+          td = event.expired_at
+          td = event.schedule
+          td = event.venue
+          td = event.aasm_state
+          td = link_to 'Show', event
+          td = link_to 'Edit', edit_event_path(event)
+          td = link_to 'Destroy', event, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+  br
+
+  = link_to 'New Event', new_event_path

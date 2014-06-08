@@ -1,0 +1,24 @@
+= semantic_form_for @escrow do |f|
+  = f.inputs do
+    = f.input :description
+    = f.input :btc_amount
+    = f.input :buyer_email
+    = f.input :seller_email
+    = f.input :btc_escrow_fee
+    = f.input :btc_seller_fee
+    = f.input :btc_buyer_fee
+    = f.input :tracking_number
+    = f.input :btc_amount_seller_will_receive
+    = f.input :max_shipping_days
+    = f.input :inspection_days
+    = f.input :payee_invitation
+    = f.input :payer_invitation
+    = f.input :btc_address
+    = f.input :payment_invitation
+    = f.input :payment_confirmation
+    = f.input :private_WIF_key
+    
+  = f.actions do 
+        = f.action :submit, :label => 'Save', button_html: { class: 'btn btn-primary'}
+        = link_to "Cancel", root_url, :class => "btn btn-warning"
+

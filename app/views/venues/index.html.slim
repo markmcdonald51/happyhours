@@ -1,0 +1,39 @@
+.container-fluid
+  h1 Listing venues
+  
+  / = semantic_form_for :venue, url: search_venues_path do |f|
+    / = f.input :venue, :as => :autocomplete, :url => autocomplete_venue_name_venues_path
+    
+  
+  .well
+    = form_tag search_venues_path, :method => 'get'
+      = autocomplete_field_tag 'venues','', autocomplete_venue_name_venues_path, :size => 75
+
+
+  .well
+  
+    - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
+      = link_to "#{tag.name} (#{tag.taggings_count})", { :action => :index, :tag => tag.name }, :class => css_class
+
+
+
+  - @venues.in_groups_of(6, nil)  do |group|
+    .row
+    - group.each do |venue|  
+      div class="col-md-2 text-center"
+        - if venue.blank? || venue.big_image_link.blank?
+          - img = 'http://placehold.it/100x67'
+        - else
+          - img = "http://www.portlandmercury.com#{venue.sm_image_link}"     
+        center  
+          = image_tag(img, {:class=>'thumbnail'}) 
+
+        - if venue.present? 
+          .address
+            strong= venue.name 
+            br         
+            = venue.full_street_address.split(',').first
+            br
+            = "#{venue.distance_from(current_user).round(2)} miles away" 
+
+  = link_to 'New Venue', new_venue_path

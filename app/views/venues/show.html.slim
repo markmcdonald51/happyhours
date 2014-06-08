@@ -1,0 +1,24 @@
+p#notice = notice
+
+p
+  strong Name:
+  = @venue.name
+p
+  strong Phone:
+  = @venue.phone
+p
+  strong Email:
+  = @venue.email
+p
+  strong Contact name:
+  = @venue.contact_name
+p
+  strong Description:
+  = @venue.description
+p
+  strong Aasm state:
+  = @venue.aasm_state
+
+= link_to 'Edit', edit_venue_path(@venue)
+'|
+= link_to 'Back', venues_path
