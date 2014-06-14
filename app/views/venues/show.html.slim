@@ -1,24 +1,80 @@
-p#notice = notice
 
-p
-  strong Name:
-  = @venue.name
-p
-  strong Phone:
-  = @venue.phone
-p
-  strong Email:
-  = @venue.email
-p
-  strong Contact name:
-  = @venue.contact_name
-p
-  strong Description:
-  = @venue.description
-p
-  strong Aasm state:
-  = @venue.aasm_state
+- if current_user
+  javascript:
+   
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+    var directionsService = new google.maps.DirectionsService();
 
-= link_to 'Edit', edit_venue_path(@venue)
-'|
-= link_to 'Back', venues_path
+    function calcRoute() {
+      var origin      = new google.maps.LatLng(#{current_user.lat}, #{current_user.lng});
+      var destination = new google.maps.LatLng(#{@venue.lat}, #{@venue.lng});
+      var request = {
+          origin:      origin,
+          destination: destination,
+          travelMode:  google.maps.TravelMode.DRIVING
+      };
+      directionsService.route(request, function(response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+          directionsDisplay.setDirections(response);
+        }
+      });
+    }
+
+    calcRoute();
+
+    var handler = Gmaps.build('Google');
+    handler.buildMap({ internal: {id: 'directions'}}, function(){
+      directionsDisplay.setMap(handler.getMap());
+    });
+  
+  
+.container
+  p#notice = notice
+  
+  .well
+    .row
+      .col-md-6
+        h2= @venue.name
+        = @venue.full_street_address
+        br
+        = @venue.phone
+        - if @venue.price
+          h4= "Price: #{@venue.price}"  
+        
+        h4== distance_from_user 
+              
+      .col-md-6
+
+        - if @venue.hours
+          p
+            strong Hours:
+            h4= @venue.hours
+
+        - if @venue.happy_hours
+          p
+            strong Happy Hours:
+            h4= @venue.happy_hours
+
+        p  
+          strong Tags:
+          = @venue.feature_list.to_s
+        
+  .row
+
+    .col-md-6
+      h3= @venue.description   
+    .col-md-6
+      - if @venue.big_image_link.present?
+        = image_tag "http://www.portlandmercury.com#{@venue.big_image_link}", class: 'img-rounded'   
+              
+    .col-md-8
+      - if current_user
+        h3== "Directions from #{current_user.postal_code} (#{distance_from_user})" 
+      
+      sdiv style='width: 800px;'
+        div id="directions" style='width: 800px; height: 400px;'
+
+
+  = link_to 'Edit', edit_venue_path(@venue)
+  '|
+  = link_to 'Back', venues_path

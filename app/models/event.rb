@@ -9,11 +9,10 @@ class Event < ActiveRecord::Base
   #attr_accessible :ice_cube_rule # which returns my deserialized ice_cube object
   belongs_to :venue
   has_many :occurrences  
-  has_one :location, through: :venue
+ # has_one :location, through: :venue
   
   after_save :create_occurrences
-  
-  #attr_accessible :started_at, :expired_at # expired_at is optional
+
   
   def schedule=(new_schedule)
  

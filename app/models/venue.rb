@@ -1,12 +1,23 @@
 class Venue < ActiveRecord::Base
-  #has_one :location, as: :locatable
-  #acts_as_mappable through: :location
-  #accepts_nested_attributes_for :location
-    
+  #include ArelHelpers::ArelTable # https://github.com/camertron/arel-helpers
+
+  include AASM
   acts_as_taggable_on :features
- 
   validates :name, presence: true
 
+=begin
+ aasm do
+      state :brand_new, :initial => true
+      state :updated_profile
+      state :trusted
+      state :banned
+      state :removed
+
+      event :profile_updated do
+        transitions :from => [:brand_new,:updated_profile], :to => :updated_profile
+      end
+  end
+=end
 
   geocoded_by :full_street_address, latitude: :lat, longitude: :lng  do |obj,results|
     if geo = results.first

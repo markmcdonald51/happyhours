@@ -1,8 +1,14 @@
 class User < ActiveRecord::Base
   include AASM
-  
-  geocoded_by :geocode_address, latitude: :lat, longitude: :lng
-  after_validation :geocode 
+
+  geocoded_by :postal_code, latitude: :lat, longitude: :lng  do |obj,results|
+    if geo = results.first
+      obj.lat = geo.latitude
+      obj.lng = geo.longitude
+      obj.postal_code = geo.address
+    end
+  end  
+  after_validation :geocode, if: ->(obj){ obj.postal_code.present? and obj.postal_code_changed? }
   
   # validations
   validates :provider, :uid, :name, :oauth_token, :image_url, presence: true

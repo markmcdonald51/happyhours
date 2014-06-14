@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
+//= require underscore
+//= require gmaps/google
 
 //= require autocomplete-rails
 //= require bootstrap.min

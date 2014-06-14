@@ -106,7 +106,27 @@ namespace :fetch do
         
       
       end
-      
-      
+
     end
+    
+    desc "get_restaurants"
+    task :parse_hours_of_operation => :environment do
+      puts "parsing hours:" 
+
+      include HoursOfOperation
+
+      Venue.where('hours is not null').each do |v|       
+        hours = v.hours   
+        create_schedule_from_string(hours)
+        
+      end  
+        #Daily 11am-11pm 
+        #Mon-Thu 11am-10pm, Fri 11am-1:30am, Sat 4pm-2:30am, Closed Sunday 
+        #Mon-Thurs 11:30 am-10 pm, Fri-Sat 11:30 am-midnight, Sun 10 am-9 pm 
+        #Mon-Thu 11am-10pm, Fri 11am-1:30am, Sat 4pm-2:30am, Closed Sunday 
+
+
+
+    end
+ 
 end

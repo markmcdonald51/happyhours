@@ -7,24 +7,27 @@ class VenuesController < ApplicationController
   # GET /venues
   # GET /venues.json
   def index
-    @tags = Venue.tag_counts_on(:features)[0..10]
+    @tags = Venue.tag_counts_on(:features)
     
-    scope = Venue
-    
-    distance = params[:distance] || 10
+    scope = Venue   
+    @distance = params[:distance] || 5
     
     if params[:venues]
       scope = scope.where("name like ?", "%#{params[:venues]}%")
+      @distance = 100
+    end
+ 
+    if params[:tag]
+      @tag = params[:tag]
+      scope = scope.tagged_with(params[:tag])
+      @distance = 20
     end
     
     if current_user
-      scope = scope.near([current_user.lat, current_user.lng], distance )
-    end    
+      scope = scope.near([current_user.lat, current_user.lng], @distance )
+    end 
     
-    if params[:tag]
-      scope = scope.tagged_with(params[:tag])
-    end
-    
+    #scope = scope.paginate(:page => params[:page], :per_page => 20)   
     @venues = scope.all       
    
   end

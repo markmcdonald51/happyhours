@@ -13,7 +13,7 @@
       .col-md-5       
         = f.input :country_code, as: :country, include_blank:'--- Select Country ---' 
 
-        = f.input :postal_code, input_html:  {placeholder: 'postal code or city. Example: 20016 or Washington, DC' }
+        = f.input :postal_code, input_html:  {placeholder: 'postal code or city. Example: burnside skatepark' }
         - # f.input :gender, as: :select, collection: ["man", "woman"], include_blank: '--- Select Gender ---'    
 
         = f.actions do 
