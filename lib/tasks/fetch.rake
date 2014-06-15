@@ -117,6 +117,8 @@ namespace :fetch do
 
       Venue.where('hours is not null').each do |v|       
         hours = v.hours   
+        puts "*************************"
+        puts "ID: #{v.id}"
         create_schedule_from_string(hours)
         
       end  
@@ -128,5 +130,28 @@ namespace :fetch do
 
 
     end
+    
+    
+    desc "fix hours"
+    task :fix_hours_of_operation => :environment do
+      puts "parsing hours:" 
+
+      include HoursOfOperation
+
+      Venue.where('hours like "%Sun-Thu%"').each do |v|  
+        hours = v.hours
+        m = hours.match(/(sun\-thu[rs]?) ([\d\:\w]+\-[\d\:\w]+)/i)
+        if m
+          sub = hours.gsub("#{m[1]} #{m[2]}", "Sun #{m[2]}, Mon-Thur #{m[2]} ")
+            #Sun-Thurs 11am-9pm, Fri-Sat 11am-10pm "
+          puts "Start: #{v.hours}"
+          puts "Sub: #{sub}"
+          v.hours = sub
+          v.save
+        end  
+      end
+    end 
+    
+    
  
 end

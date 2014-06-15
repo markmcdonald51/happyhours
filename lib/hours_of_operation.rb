@@ -52,6 +52,8 @@ module HoursOfOperation
   end
   
   def get_hours(s)  
+  
+    #include 'midnight/midnite'
     if m = s.match(HOURS_THRU_REGEX_MATCH) 
       return m[1,2]
     end
