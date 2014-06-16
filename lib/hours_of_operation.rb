@@ -12,6 +12,8 @@ module HoursOfOperation
        
   def create_schedule_from_string(s)
   
+    
+  
     s.gsub!(/thurs/i, 'thu')
     s.gsub!(/tues/i, 'tue')
     s.gsub!(/&/, ' - ')
@@ -26,6 +28,17 @@ module HoursOfOperation
       hours = get_hours(p)
       puts hours.to_s
       #add_to_schedule(p, schedule)
+      
+      s_time = Chronic.parse("Today #{hours.first}")
+      e_time = Chronic.parse("Today #{hours.last}")
+      
+      schedule = IceCube::Schedule.new(s_time, end_time: e_time+5.years)
+     
+      schedule.add_recurrence_rule(IceCube::Rule.weekly.day(days))
+      
+      y schedule.occurrences(Time.new.end_of_month)
+      #schedule.occurs_between?(Time.now, Time.now.end_of_month)
+      debugger
     end
     
     #puts "#{days.first} #{hours.first}"
@@ -47,8 +60,6 @@ module HoursOfOperation
       return [DAYS_FULLNAME[DAYS.index(m[1].downcase)].to_sym]
     end
     return DAYS_FULLNAME[days.first .. days.last].map(&:to_sym)  unless days.blank?
-    
-      
   end
   
   def get_hours(s)  

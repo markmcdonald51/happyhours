@@ -100,16 +100,11 @@ namespace :fetch do
           
           ### Make searchable
           #
-          
-          
           end
-        
-      
       end
-
     end
     
-    desc "get_restaurants"
+    desc "parse restaurants hours "
     task :parse_hours_of_operation => :environment do
       puts "parsing hours:" 
 
@@ -119,16 +114,16 @@ namespace :fetch do
         hours = v.hours   
         puts "*************************"
         puts "ID: #{v.id}"
-        create_schedule_from_string(hours)
+        schedules = create_schedule_from_string(hours)
+        #schedules.each do |s|
+        #  v.events.new(schedule: s)
+        #end
         
       end  
         #Daily 11am-11pm 
         #Mon-Thu 11am-10pm, Fri 11am-1:30am, Sat 4pm-2:30am, Closed Sunday 
         #Mon-Thurs 11:30 am-10 pm, Fri-Sat 11:30 am-midnight, Sun 10 am-9 pm 
         #Mon-Thu 11am-10pm, Fri 11am-1:30am, Sat 4pm-2:30am, Closed Sunday 
-
-
-
     end
     
     
@@ -146,8 +141,8 @@ namespace :fetch do
             #Sun-Thurs 11am-9pm, Fri-Sat 11am-10pm "
           puts "Start: #{v.hours}"
           puts "Sub: #{sub}"
-          v.hours = sub
-          v.save
+          #v.hours = sub
+          #v.save
         end  
       end
     end 

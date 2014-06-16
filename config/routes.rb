@@ -9,7 +9,6 @@ Sandbox::Application.routes.draw do
     end   
   end
 
-  resources :escrows
 
   get "set_language/english"
   get "set_language/spanish"
@@ -24,6 +23,8 @@ Sandbox::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
+  #root 'venues#index'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -13,6 +13,7 @@ class CreateVenues < ActiveRecord::Migration
       t.string :r_link
       t.string :hours
       t.text :happy_hours
+      t.boolean :free_wifi
       t.string :aasm_state
 
       t.timestamps

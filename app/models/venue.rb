@@ -4,6 +4,10 @@ class Venue < ActiveRecord::Base
   include AASM
   acts_as_taggable_on :features
   validates :name, presence: true
+  after_validation :geocode, if: ->(obj){ obj.full_street_address.present? and 
+    obj.full_street_address_changed? }
+    
+  has_many :events
 
 =begin
  aasm do

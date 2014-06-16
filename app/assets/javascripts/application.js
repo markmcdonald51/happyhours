@@ -16,13 +16,14 @@
 //= require underscore
 //= require gmaps/google
 
+
+
 //= require autocomplete-rails
 //= require bootstrap.min
 //= turbolinks_transitions
 //= require turbolinks
 //= require recurring_select
 //= require_tree .
-
 
 
 
