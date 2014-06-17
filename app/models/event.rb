@@ -1,4 +1,3 @@
-
 class Event < ActiveRecord::Base
   #include AASM
   include IceCube
@@ -8,19 +7,17 @@ class Event < ActiveRecord::Base
   serialize :schedule, Hash
   #attr_accessible :ice_cube_rule # which returns my deserialized ice_cube object
   belongs_to :venue
-  has_many :occurrences  
+  has_many :occurences  
  # has_one :location, through: :venue
   
   after_save :create_occurrences
-
-  
-  def schedule=(new_schedule)
  
+  def schedule=(new_schedule) 
     if RecurringSelect.is_valid_rule?(new_schedule)
       write_attribute(:schedule, RecurringSelect.dirty_hash_to_rule(new_schedule).to_hash)
     else
       write_attribute(:schedule, nil)
-      self.occurrences.destroy_all
+      self.occurences.destroy_all 
     end
   end
 
@@ -54,14 +51,14 @@ class Event < ActiveRecord::Base
   
     
   def create_occurrences  
-      self.occurrences.destroy_all
+      self.occurences.destroy_all
       converted_schedule.occurrences(Time.new.end_of_month).each do |o|
         # fix the datetime in the newschedule
         t = Time.parse(o.to_s) 
    
         start_at  = Time.mktime(t.year, t.month, t.day, t.hour, t.min)
         expire_at = Time.mktime(t.year, t.month, t.day, expired_at.hour, expired_at.min)        
-        self.occurrences.create(started_at: start_at, expired_at: expire_at)
+        self.occurences.create(started_at: start_at, expired_at: expire_at)
       end
   end    
   

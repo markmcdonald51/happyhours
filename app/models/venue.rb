@@ -8,6 +8,12 @@ class Venue < ActiveRecord::Base
     obj.full_street_address_changed? }
     
   has_many :events
+  has_many :occurences, through: :events
+  
+  scope :open, -> { joins(:occurences).where("occurences.started_at < ? 
+                  and occurences.expired_at > ?", Time.now, Time.now) }
+  
+  
 
 =begin
  aasm do

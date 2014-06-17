@@ -20,8 +20,9 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'will_paginate', '~> 3.0'
 gem 'gmaps4rails'
-gem 'chronic'
+gem 'chronic' 
 #gem "best_in_place"
+
 
 #gem 'arel-helpers'
 

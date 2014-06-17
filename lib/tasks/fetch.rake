@@ -110,14 +110,24 @@ namespace :fetch do
 
       include HoursOfOperation
 
-      Venue.where('hours is not null').each do |v|       
+      Venue.where('hours is not null').each do |v| 
+            
         hours = v.hours   
         puts "*************************"
         puts "ID: #{v.id}"
         schedules = create_schedule_from_string(hours)
-        #schedules.each do |s|
-        #  v.events.new(schedule: s)
-        #end
+        
+        #schedule.occurs_between?(Time.now, Time.now.end_of_month)
+        #debugger
+        
+        schedules.each do |s|
+          puts "In rake task ***"
+          schedule, schedule_hash, s_time, e_time, title = s
+          
+          v.events.new(title: title, schedule: schedule_hash,
+            started_at: s_time, expired_at: e_time) 
+        end
+        v.save 
         
       end  
         #Daily 11am-11pm 
