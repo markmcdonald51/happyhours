@@ -1,4 +1,6 @@
 class VenuesController < ApplicationController
+  ActionView::Helpers::DateHelper 
+
   before_action :set_venue, only: [:show, :edit, :update, :destroy]
   
   autocomplete :venue, :name, :full => true
@@ -8,12 +10,11 @@ class VenuesController < ApplicationController
   # GET /venues.json
   def index
     @tags = Venue.tag_counts_on(:features)
-    
     scope = Venue   
     @distance = params[:distance] || 5
-    
-    if params[:venues]
-      scope = scope.where("name like ?", "%#{params[:venues]}%")
+
+    if params[:search_name]
+      scope = scope.where("name like ?", "%#{params[:search_name]}%")
       @distance = 100
     end
  
@@ -24,8 +25,18 @@ class VenuesController < ApplicationController
     end
     
     if current_user
-      scope = scope.near([current_user.lat, current_user.lng], @distance )
+      scope = scope.near(current_user, @distance)
     end 
+    
+    if params[:open]
+      scope = scope.open
+    end
+    
+    if @happy_hour = params[:happy_hour]      
+      scope = scope.happy_hour_now
+    end
+    
+    #debugger
     
     #scope = scope.paginate(:page => params[:page], :per_page => 20)   
     @venues = scope.all       

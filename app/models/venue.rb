@@ -10,10 +10,12 @@ class Venue < ActiveRecord::Base
   has_many :events
   has_many :occurences, through: :events
   
-  scope :open, -> { joins(:occurences).where("occurences.started_at < ? 
+  #delegate :started_at, :expired_at, to: :occurences
+    
+  scope :open, -> { includes(:occurences).joins(:occurences).where("occurences.started_at < ? 
                   and occurences.expired_at > ?", Time.now, Time.now) }
   
-  
+  scope :happy_hour_now, -> { where("happy_hours != ''") }
 
 =begin
  aasm do

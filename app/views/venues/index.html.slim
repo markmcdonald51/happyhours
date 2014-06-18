@@ -9,39 +9,32 @@
         Search for places
       
       = form_tag search_venues_path, :method => 'get'
-        = autocomplete_field_tag 'venues','', autocomplete_venue_name_venues_path, :size => 25
+        = autocomplete_field_tag 'search_name','', autocomplete_venue_name_venues_path, :size => 25
 
     - tag_cloud(@tags, %w(css1 css2 css3 css4)) do |tag, css_class|
       li= link_to "#{tag.name} (#{tag.taggings_count})", { :action => :index, :tag => tag.name }, :class => css_class
   
   .col-md-9
-    / = will_paginate @venues
+  
+    .well 
+      = semantic_form_for :filter, url: search_venues_path, :method => 'get' do |f|
+        .row
+          .col-md-2
+            = f.input :distance, label: "Distance From Me"  ,  type: :select, :collection => [1,2,3,4,5,10],
+              input_html: { :name => "distance" }, selected: @distance
+              
+          .col-md-3  
+            = f.input :happy_hour, type: :select, :collection => ['All', 'Open Now', 'Happy Hour Only'],
+              input_html: { :name => "happy_hour" } , selected: @happy_hour
+           
+          .col-md-3        
+            = f.actions do 
+              = f.action :submit, :label => 'Go', button_html: { class: 'btn btn-primary'}
+    / - if current_user
+      / h3= " #{@tag.pluralize} listings within #{@distance} miles  of venues #{current_user.postal_code} rescue nil"
 
-    - if current_user
-        .well 
-          / h3= " #{@tag.pluralize} listings within #{@distance} miles  of venues #{current_user.postal_code} rescue nil"
-
-
-    - @venues.in_groups_of(6, nil)  do |group|
-      .row
-      - group.each do |venue|  
-        div class="col-md-2 text-center"
-          - if venue.blank?
-            break
-          -elsif venue.big_image_link.blank?
-            - img = 'http://placehold.it/100x67'
-          - else
-            - img = "http://www.portlandmercury.com#{venue.sm_image_link}"     
-          center  
-            = image_tag(img) unless  venue.blank?
-
-          - if venue.present? 
-            .address
-              strong= link_to venue.name, venue 
-              br         
-              = venue.full_street_address.split(',').first
-              br
-              -if current_user
-                = "#{venue.distance_from(current_user).round(2)} miles away" 
-
+    h3= "Found #{@venues.length}"
+      
+    = render 'in_groups'
+    
 = link_to 'New Venue', new_venue_path
