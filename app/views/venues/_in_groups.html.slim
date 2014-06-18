@@ -1,0 +1,25 @@
+- @venues.in_groups_of(6, nil)  do |group|
+      .row
+      - group.each do |venue|  
+        div class="col-md-2 text-center"
+          - if venue.blank?
+            break
+          -elsif venue.big_image_link.blank?
+            - img = 'http://placehold.it/100x67'
+          - else
+            - img = "http://www.portlandmercury.com#{venue.sm_image_link}"     
+          center  
+            = image_tag(img) unless  venue.blank?
+
+          - unless venue.blank? 
+            .address
+              strong= link_to venue.name, venue 
+              br         
+              = venue.full_street_address.split(',').first
+              
+              / - if venue.open?
+              / br= distance_of_time_in_words(Time.now, venue.expired_at) 
+              br
+              -if current_user
+                = "#{venue.distance_from(current_user).round(2)} miles away" 
+
