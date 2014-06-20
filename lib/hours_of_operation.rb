@@ -8,7 +8,7 @@ module HoursOfOperation
   DAYS_THRU_REGEX_MATCH  = /(#{DAYS_PIPE})\s*\-\s*(#{DAYS_PIPE})/i
   HOURS_THRU_REGEX_MATCH = /([\d\:]+\w+)-([\d\:]+\w+)/i
  
- 
+  # IceCube days actually begin with Sunday, so i needed another ary to match my original
   REAL_DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'] 
   REAL_DAYS_FULLNAME= ['sunday','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] 
   

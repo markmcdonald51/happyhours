@@ -157,6 +157,23 @@ namespace :fetch do
       end
     end 
     
+    desc "fix tags"
+    task :fix_tags=> :environment do
+      puts "fix tags:"
+      
+      Venue.all.each do |v|     
+        v.tag_list_on(:features).each do |t|
+          if t =~ /^\[|"/ 
+            puts "Removing #{t}"
+            v.feature_list.remove(t)
+            fixed = t.gsub(/[\[|\]"]+/, '')
+            puts "Adding #{fixed}"
+            v.feature_list.add(fixed)
+          end
+        end
+        v.save  
+      end   
+    end
     
  
 end

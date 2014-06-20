@@ -7,6 +7,9 @@ Sandbox::Application.routes.draw do
       get :autocomplete_venue_name
       get :search, to: 'venues#index'
     end   
+    
+    resources :events
+    
   end
 
 
@@ -24,6 +27,7 @@ Sandbox::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
   #root 'venues#index'
+
 
 
   # Example of regular route:

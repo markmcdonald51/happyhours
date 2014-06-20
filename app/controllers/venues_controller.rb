@@ -4,6 +4,12 @@ class VenuesController < ApplicationController
   before_action :set_venue, only: [:show, :edit, :update, :destroy]
   
   autocomplete :venue, :name, :full => true
+  
+  # if there isnt a current user then do something like
+ # 2.1.1 :004 > Geocoder.search '75.175.49.34'
+ #=> [#<Geocoder::Result::Freegeoip:0x0000000748e0c0 @data={"ip"=>"75.175.49.34", "country_code"=>"US", #"country_name"=>"United States", "region_code"=>"OR", "region_name"=>"Oregon", "city"=>"Portland", "zipcode"=>"", # "latitude"=>45.5234, "longitude"=>-122.6762, "metro_code"=>"820", "area_code"=>"503"}, @cache_hit=nil>] 
+
+  
 
   
   # GET /venues
@@ -11,32 +17,34 @@ class VenuesController < ApplicationController
   def index
     @tags = Venue.tag_counts_on(:features)
     scope = Venue   
-    @distance = params[:distance] || 5
+    @distance = params[:distance] || 1
 
     if params[:search_name]
       scope = scope.where("name like ?", "%#{params[:search_name]}%")
-      @distance = 100
+      @distance = 100 
     end
  
     if params[:tag]
       @tag = params[:tag]
       scope = scope.tagged_with(params[:tag])
-      @distance = 20
+      @distance = 5
     end
     
     if current_user
       scope = scope.near(current_user, @distance)
     end 
     
-    if params[:open]
+    if session[:distance] = params[:open]
       scope = scope.open
     end
     
-    if @happy_hour = params[:happy_hour]      
+    if session[:happy_hour] = params[:happy_hour]      
       scope = scope.happy_hour_now
     end
     
     #debugger
+    session[:distance] = @distance
+    session[:open] = params[:open]
     
     #scope = scope.paginate(:page => params[:page], :per_page => 20)   
     @venues = scope.all       

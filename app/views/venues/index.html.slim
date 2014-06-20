@@ -5,8 +5,7 @@
     
   .col-md-3
     .well
-      h4 
-        Search for places
+      h4= "Search for places"
       
       = form_tag search_venues_path, :method => 'get'
         = autocomplete_field_tag 'search_name','', autocomplete_venue_name_venues_path, :size => 25
