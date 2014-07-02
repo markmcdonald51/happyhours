@@ -13,6 +13,7 @@
  *= require_self
  *= require jquery.ui.all
  *= require recurring_select
+ *= require uploader/application
  *= require_tree .
  */
 

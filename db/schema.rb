@@ -11,7 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140607212949) do
+ActiveRecord::Schema.define(version: 20140624214308) do
+
+  create_table "assets", force: true do |t|
+    t.string   "data_file_name",                           null: false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "assetable_id",                             null: false
+    t.string   "assetable_type",    limit: 30,             null: false
+    t.string   "type",              limit: 30
+    t.string   "guid",              limit: 20
+    t.string   "public_token",      limit: 20
+    t.integer  "user_id"
+    t.integer  "sort_order",                   default: 0
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "assets", ["assetable_type", "type", "assetable_id"], name: "index_assets_on_assetable_type_and_type_and_assetable_id", using: :btree
+  add_index "assets", ["guid"], name: "index_assets_on_guid", using: :btree
+  add_index "assets", ["public_token"], name: "index_assets_on_public_token", using: :btree
+  add_index "assets", ["user_id"], name: "index_assets_on_user_id", using: :btree
 
   create_table "escrows", force: true do |t|
     t.integer  "user_id"
@@ -67,7 +89,7 @@ ActiveRecord::Schema.define(version: 20140607212949) do
 
   add_index "locations", ["locatable_id", "locatable_type"], name: "index_locations_on_locatable_id_and_locatable_type", using: :btree
 
-  create_table "occurrences", force: true do |t|
+  create_table "occurences", force: true do |t|
     t.datetime "started_at"
     t.datetime "expired_at"
     t.boolean  "generated"
@@ -77,7 +99,7 @@ ActiveRecord::Schema.define(version: 20140607212949) do
     t.datetime "updated_at"
   end
 
-  add_index "occurrences", ["event_id"], name: "index_occurrences_on_event_id", using: :btree
+  add_index "occurences", ["event_id"], name: "index_occurrences_on_event_id", using: :btree
 
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"
@@ -137,5 +159,8 @@ ActiveRecord::Schema.define(version: 20140607212949) do
     t.decimal  "lat",                 precision: 10, scale: 6
     t.decimal  "lng",                 precision: 10, scale: 6
   end
+
+  add_index "venues", ["lat", "lng"], name: "lat_lng", using: :btree
+  add_index "venues", ["name"], name: "name", using: :btree
 
 end

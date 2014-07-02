@@ -104,6 +104,16 @@ namespace :fetch do
       end
     end
     
+    ##############################################     
+    desc "update monthly business hours"
+    task :update_hours_of_operation => :environment do
+    
+      Venue.where('hours is not null').each do |v|
+        v.events.each{|e| e.create_occurrences } 
+      end
+    end
+    
+    ##############################################3
     desc "parse restaurants hours "
     task :parse_hours_of_operation => :environment do
       puts "parsing hours:" 

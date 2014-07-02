@@ -15,8 +15,7 @@
 //= require jquery.ui.all
 //= require underscore
 //= require gmaps/google
-
-
+//= require uploader/application
 
 //= require autocomplete-rails
 //= require bootstrap.min

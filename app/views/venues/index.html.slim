@@ -1,11 +1,13 @@
 .container-fluid
   
-  / = semantic_form_for :venue, url: search_venues_path do |f|
-    / = f.input :venue, :as => :autocomplete, :url => autocomplete_venue_name_venues_path
-    
+
   .col-md-3
     .well
       h4= "Search for places"
+      
+      / = semantic_form_for :venue, url: search_venues_path do |f|
+        / = f.input :venue, :as => :autocomplete, :url => autocomplete_venue_name_venues_path
+    
       
       = form_tag search_venues_path, :method => 'get'
         = autocomplete_field_tag 'search_name','', autocomplete_venue_name_venues_path, :size => 25

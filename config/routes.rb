@@ -11,6 +11,8 @@ Sandbox::Application.routes.draw do
     resources :events
     
   end
+  
+  mount Uploader::Engine => '/uploader'
 
 
   get "set_language/english"

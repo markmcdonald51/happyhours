@@ -22,7 +22,7 @@ gem 'will_paginate', '~> 3.0'
 gem 'gmaps4rails'
 gem 'chronic' 
 #gem "best_in_place"
-
+gem 'yt'
 
 #gem 'arel-helpers'
 
@@ -42,6 +42,9 @@ gem 'bitcoin-ruby', git: 'https://github.com/lian/bitcoin-ruby', branch: 'master
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-google-oauth2'
+gem "rails-uploader"
+gem 'cancancan', '~> 1.8'
+gem 'carrierwave'
 
 # mysql2
 gem 'mysql2'

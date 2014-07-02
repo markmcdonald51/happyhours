@@ -15,6 +15,8 @@
 
         = f.input :postal_code, input_html:  {placeholder: 'postal code or city. Example: burnside skatepark' }
         - # f.input :gender, as: :select, collection: ["man", "woman"], include_blank: '--- Select Gender ---'    
+        
+        = f.input :picture, :as => :uploader
 
         = f.actions do 
           = f.action :submit, :label => 'Save', button_html: { class: 'btn btn-primary'}

@@ -1,7 +1,6 @@
 class Venue < ActiveRecord::Base
   #include ArelHelpers::ArelTable # https://github.com/camertron/arel-helpers
 
-  include AASM
   acts_as_taggable_on :features
   validates :name, presence: true
   after_validation :geocode, if: ->(obj){ obj.full_street_address.present? and 
@@ -17,7 +16,15 @@ class Venue < ActiveRecord::Base
   
   scope :happy_hour_now, -> { where("happy_hours != ''") }
 
+  scope :priced_economical, -> { where('length(price) = 1') }
+  scope :priced_moderate,   -> { where('length(price) = 2') }
+  scope :pricy,             -> { where('length(price) = 3') }
+  scope :expensive,         -> { where('length(price) = 4') }
+  
+  
 =begin
+  include AASM
+
  aasm do
       state :brand_new, :initial => true
       state :updated_profile

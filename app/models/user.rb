@@ -1,5 +1,13 @@
 class User < ActiveRecord::Base
   include AASM
+  include Uploader::Fileuploads
+    
+  has_one :picture, :as => :assetable
+  #has_many :pictures, :as => :assetable
+
+ # has_one :avatar, :as => :assetable
+
+  fileuploads :picture #, :avatar
 
   geocoded_by :postal_code, latitude: :lat, longitude: :lng  do |obj,results|
     if geo = results.first
@@ -65,12 +73,14 @@ class User < ActiveRecord::Base
       user.oauth_token = auth["credentials"]["token"]
     end
   end
-    
+   
+   
+=begin    
   private
     def geocode_address
       [postal_code, country_code].compact.join(', ')  
     end
-=begin    
+  
       unless country_code.blank? && postal_code.blank?
         loc = "#{country_code}, #{postal_code}"
         geo=Geokit::Geocoders::MultiGeocoder.geocode(loc)
@@ -85,5 +95,6 @@ class User < ActiveRecord::Base
       end  
     end
 =end
-
 end
+
+

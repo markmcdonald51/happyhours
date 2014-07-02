@@ -7,7 +7,7 @@ class Event < ActiveRecord::Base
   serialize :schedule, Hash
   #attr_accessible :ice_cube_rule # which returns my deserialized ice_cube object
   belongs_to :venue
-  has_many :occurences  
+  has_many :occurences, dependent: :destroy
  # has_one :location, through: :venue
   
   after_save :create_occurrences
