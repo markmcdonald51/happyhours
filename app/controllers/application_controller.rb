@@ -23,6 +23,8 @@ class ApplicationController < ActionController::Base
     def set_locale
       I18n.locale = session[:locale] || I18n.default_locale
       session[:locale] = I18n.locale
+      
+      #Geocoder.search(IP_ADDRESS)
     end
     
     # amoniauth with twitter force this check to prevent user data nil

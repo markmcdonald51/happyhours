@@ -1,0 +1,12 @@
+Add I WANT TO GO HERE (wish list)
+ADD Favorites
+ADD RATINGS
+ADD COMMENTS
+ADD USER IMAGES
+
+
+add timezone for user
+
+ 'timezone'
+
+
